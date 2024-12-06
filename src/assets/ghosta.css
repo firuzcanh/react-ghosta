@@ -1,4 +1,4 @@
-.ghosta--root {
+:root {
   --ga-text-panel: #000;
   --ga-bg-panel: #fff;
 
@@ -13,47 +13,38 @@
   --ga-text-title: #000;
   --ga-text-description: #888;
 
-  --ga-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --ga-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
   --ga-motion-zoomIn: ghostaZoomIn 200ms ease-out forwards;
   --ga-motion-zoomOut: ghostaZoomOut 200ms ease-in forwards;
-  --ga-motion-zoomInHalf: ghostaZoomInHalf 200ms ease-out forwards;
+  --ga-motion-zoomInHalf: ghostaZoomInHalf 150ms ease-out forwards;
   --ga-motion-zoomOutHalf: ghostaZoomOutHalf 200ms ease-in forwards;
-}
-
-.ghosta {
-  position: fixed;
-  z-index: 999;
-  inset: 0;
-  padding: 16px;
-  overflow-y: auto;
-}
-
-.ghosta__scroll-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
+  --ga-motion-fadeIn: ghostaFadeIn 150ms ease-out forwards;
+  --ga-motion-fadeOut: ghostaFadeOut 150ms ease-in forwards;
 }
 
 .ghosta__panel {
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  top: 50%;
   color: var(--ga-text-panel);
   background-color: var(--ga-bg-panel);
   width: 100%;
   border-radius: 16px;
   font-family: var(--ga-font-family);
+  transform: translateX(-50%) translateY(-50%);
+  transform-origin: top left;
 }
 
-.ghosta--sm .ghosta__panel {
+.ghosta--sm {
   max-width: 400px;
 }
-.ghosta--md .ghosta__panel {
+.ghosta--md {
   max-width: 500px;
 }
-.ghosta--lg .ghosta__panel {
+.ghosta--lg {
   max-width: 600px;
 }
 
@@ -135,7 +126,7 @@
 
 .ghosta__backdrop {
   position: fixed;
-  z-index: -1;
+  z-index: 50;
   inset: 0;
   background-color: var(--ga-bg-backdrop);
 }
@@ -274,61 +265,19 @@
 
 /********** Animations **********/
 /* Panel Animation */
-.ghosta__panel--enter {
-  transition-timing-function: ease-out;
-  transition-duration: 200ms;
-}
-.ghosta__panel--enterFrom {
-  opacity: 0;
-  transform: scale(0.5);
-}
-.ghosta__panel--enterTo {
-  opacity: 1;
-  transform: scale(1);
-}
-.ghosta__panel--entered {
+.ghosta__panel[data-state="open"] {
   animation: var(--ga-motion-zoomInHalf);
-  animation-duration: 200ms;
 }
-
-.ghosta__panel--leave {
-  transition-timing-function: ease-in;
-  transition-duration: 150ms;
-}
-.ghosta__panel--leaveFrom {
-  opacity: 1;
-  transform: scale(1);
-}
-.ghosta__panel--leaveTo {
-  opacity: 0;
-  transform: scale(0.5);
-}
-.ghosta__panel--leaved {
+.ghosta__panel[data-state="closed"] {
   animation: var(--ga-motion-zoomOutHalf);
-  animation-duration: 150ms;
 }
 
 /* Backdrop Animation */
-.ghosta__backdrop--enter {
-  transition-timing-function: ease-out;
-  transition-duration: 150ms;
+.ghosta__backdrop[data-state="open"] {
+  animation: var(--ga-motion-fadeIn);
 }
-.ghosta__backdrop--enterFrom {
-  opacity: 0;
-}
-.ghosta__backdrop--enterTo {
-  opacity: 1;
-}
-
-.ghosta__backdrop--leave {
-  transition-timing-function: ease-in;
-  transition-duration: 150ms;
-}
-.ghosta__backdrop--leaveFrom {
-  opacity: 1;
-}
-.ghosta__backdrop--leaveTo {
-  opacity: 0;
+.ghosta__backdrop[data-state="closed"] {
+  animation: var(--ga-motion-fadeOut);
 }
 
 /********** Keyframes **********/
@@ -358,24 +307,46 @@
 
 @keyframes ghostaZoomInHalf {
   0% {
-    transform: scale(0.5);
+    transform: scale(0.5) translateX(-50%) translateY(-50%);
+    opacity: 0;
   }
   80% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-50%) translateY(-50%);
   }
   100% {
-    transform: scale(1);
+    transform: scale(1) translateX(-50%) translateY(-50%);
+    opacity: 1;
   }
 }
 
 @keyframes ghostaZoomOutHalf {
   0% {
-    transform: scale(1);
+    transform: scale(1) translateX(-50%) translateY(-50%);
+    opacity: 1;
   }
   20% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-50%) translateY(-50%);
   }
   100% {
-    transform: scale(0.5);
+    transform: scale(0.5) translateX(-50%) translateY(-50%);
+    opacity: 0;
+  }
+}
+
+@keyframes ghostaFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ghostaFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

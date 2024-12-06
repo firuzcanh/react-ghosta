@@ -1,11 +1,11 @@
-import type { GhostaPopupBodyProps } from './popup.type';
+import type { GhostaPopupBodyProps } from "./popup.type";
 
-import * as React from 'react';
-import { Dialog } from '@headlessui/react';
-import { cx } from 'class-variance-authority';
+import * as React from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { cx } from "class-variance-authority";
 
-import { PopupContext } from './Popup';
-import { popupContent } from './popup.variant';
+import { PopupContext } from "./Popup";
+import { popupContent } from "./popup.variant";
 
 const PopupBody: React.FC<GhostaPopupBodyProps> = ({
   title,
@@ -22,25 +22,25 @@ const PopupBody: React.FC<GhostaPopupBodyProps> = ({
   return (
     <div
       className={cx(
-        'ghosta__content',
+        "ghosta__content",
         popupContent({ alignment }),
         classNames?.panelBody
       )}
     >
       {icon ? (
-        <div className={cx('ghosta__content__icon', classNames?.icon)}>
+        <div className={cx("ghosta__content__icon", classNames?.icon)}>
           {icon}
         </div>
       ) : null}
       {title ? (
         <Dialog.Title
-          className={cx('ghosta__content__title', classNames?.title)}
+          className={cx("ghosta__content__title", classNames?.title)}
         >
           {title}
         </Dialog.Title>
       ) : null}
       {description ? (
-        <div className={cx('ghosta__content__desc', classNames?.description)}>
+        <div className={cx("ghosta__content__desc", classNames?.description)}>
           {description}
         </div>
       ) : null}

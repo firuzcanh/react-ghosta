@@ -7,7 +7,7 @@ export function generateCssVariables(
 ) {
   return Object.entries(object || {}).reduce(
     (acc, [key, value]) => {
-      acc[`--ba-${convertStringToKebap(key)}`] = value;
+      acc[`--ga-${convertStringToKebap(key)}`] = value;
       return acc;
     },
     {} as Record<string, string | number>

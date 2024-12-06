@@ -1,12 +1,12 @@
-import type { GhostaPopupProps } from './popup.type';
+import type { GhostaPopupProps } from "./popup.type";
 
-import * as React from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { cx } from 'class-variance-authority';
+import * as React from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { cx } from "class-variance-authority";
 
-import { XMarkIcon } from '../icons';
-import { popup } from './popup.variant';
-import { generateCssVariables } from '../../utils/helpers';
+import { XMarkIcon } from "../icons";
+import { popup } from "./popup.variant";
+import { generateCssVariables } from "../../utils/helpers";
 
 export const PopupContext = React.createContext<GhostaPopupProps>(
   {} as GhostaPopupProps
@@ -58,64 +58,37 @@ const Popup: React.FC<GhostaPopupProps> = ({
         onClose: handleClose,
       }}
     >
-      {/* Popup Transition Wrapper */}
-      <Transition
-        as={Dialog}
-        show={showPopup}
-        onClose={handleClose}
-        className={cx('ghosta ghosta--root', popup({ size, alignment }))}
-        style={generateCssVariables(colors)}
-        appear
-        unmount
-      >
-        {/* Popup */}
-        {/* Backdrop */}
-        {showBackdrop && (
-          <Transition.Child
-            as="div"
-            className={cx('ghosta__backdrop', classNames?.backdrop)}
-            aria-hidden="true"
-            enter="ghosta__backdrop--enter"
-            enterFrom="ghosta__backdrop--enterFrom"
-            enterTo="ghosta__backdrop--enterTo"
-            leave="ghosta__backdrop--leave"
-            leaveFrom="ghosta__backdrop--leaveFrom"
-            leaveTo="ghosta__backdrop--leaveTo"
-          />
-        )}
+      {/* Popup */}
+      <Dialog.Root open={showPopup} onOpenChange={handleClose}>
+        <Dialog.Portal>
+          {/* Backdrop */}
+          {showBackdrop && (
+            <Dialog.Overlay
+              className={cx("ghosta__backdrop", classNames?.backdrop)}
+              style={generateCssVariables(colors)}
+            />
+          )}
 
-        {/* Panel */}
-        <div className="ghosta__scroll-container">
-          <Transition.Child
-            as={Dialog.Panel}
-            className={cx(
-              'ghosta__panel',
-              classNames?.panel,
-              showPopup ? 'ghosta__panel--entered' : 'ghosta__panel--leaved'
-            )}
-            enter="ghosta__panel--enter"
-            enterFrom="ghosta__panel--enterFrom"
-            enterTo="ghosta__panel--enterTo"
-            leave="ghosta__panel--leave"
-            leaveFrom="ghosta__panel--leaveFrom"
-            leaveTo="ghosta__panel--leaveTo"
+          <Dialog.Content
+            className={cx("ghosta__panel", popup({ size, alignment }))}
+            style={generateCssVariables(colors)}
           >
             {/* Close Button */}
             {showCloseButton ? (
-              <button
-                className={cx('ghosta__close-button', classNames?.closeButton)}
+              <Dialog.Close
+                className={cx("ghosta__close-button", classNames?.closeButton)}
                 aria-label="Close"
                 onClick={handleClose}
               >
                 <XMarkIcon />
-              </button>
+              </Dialog.Close>
             ) : null}
 
             {/* Entire Content */}
             {children}
-          </Transition.Child>
-        </div>
-      </Transition>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </PopupContext.Provider>
   );
 };
