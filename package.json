@@ -50,7 +50,7 @@
   ],
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",
-    "class-variance-authority": "^0.7.0"
+    "class-variance-authority": "^0.7.1"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -58,15 +58,15 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^11.0.2",
-    "@types/node": "^20.11.17",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
-    "husky": "^9.0.10",
-    "prettier": "^3.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.56",
+    "@types/react-dom": "^18.2.19",
+    "husky": "^9.0.11",
+    "prettier": "^3.4.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "size-limit": "^11.0.2",
     "tsup": "^8.0.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.7.2"
   }
 }
